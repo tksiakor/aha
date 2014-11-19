@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('aha.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
@@ -33,16 +33,17 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+.controller('UsersCtrl', function($scope) {
+  $scope.users = [
+    { name: 'Kpetermeni Siakor', id: 1, username: '@kpetermeni' },
+    { name: 'Shamir Adjaku', id: 2, username: '@shamireyram' },
+    { name: 'Senanu Fiam-Coblavie', id: 3, username: '@senanufc' },
+    { name: 'Sheila Plange', id: 4 , username: '@missplange'},
+    { name: 'Sharon Melomey', id: 5, username: '@mawuena' },
+    { name: 'Unconfirmed Person', id: 6, username: '@tanzania' }
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('UserCtrl', function($scope, $stateParams) {
+  $scope.username = $stateParams.userName;
 });
