@@ -22,7 +22,8 @@ var businessSchema = new mongoose.Schema({
     bdescription:{type:String},
     blat:{type:Number},
     blong:{type:Number},
-    bwebsite:{type:String}
+    bwebsite:{type:String},
+    hits:{type:Number}
 
 
 })
@@ -32,13 +33,16 @@ var individualSchema = new mongoose.Schema({
     iuser:{type:String},
     fname:{type:String},
     lname:{type:String},
-    iphone:{type:String}
+    iphone:{type:String},
+    ilat:{type:Number},
+    ilong:{type:Number},
+    hits:{type:Number}
 
 })
 
 //MODELS*************************
-var businessUsers = mongoose.model('BUser', businessSchema, "BUser" );
-var socialTopic = mongoose.model('IUser', individualSchema, "IUser");
+var businessUser = mongoose.model('BUser', businessSchema, "BUser" );
+var individualUser = mongoose.model('IUser', individualSchema, "IUser");
 
 
 
@@ -47,20 +51,120 @@ var socialTopic = mongoose.model('IUser', individualSchema, "IUser");
 //**Business User Methods**
 
 //To register a Business
+app.get('/registerbusiness', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+
+    user.create({
+        buser:''+req.param("buser"),
+       
+
+    }, function (err, fname, lname) {
+
+      if(err){
+        console.log(err);
+        console.log("There's a problem with registering somewhere... Find it!");
+        res.end("0");
+      }
+      else{
+      console.log(bname + " has been added to the db");
+      res.end("Registered");
+    }
+      
+
+})
+
+})
+
+
 //To Find Business by Name
+app.get('/authbusinessname', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+        //check if a user's password is valid like so:
+       businessUser.findOne({ bname: ''+req.param("bname") }, function(err, user) {
+            if (user.bname === (''+req.param("bname"))) {
+                // ... user is legit
+                console.log("user found");
+                res.end("1");
+            }
+            else{
+            console.log("user not found");
+            res.end("0");
+        }
+        })
+})
+//To check business username availability
+
 //To set Business Coordinates
-//To get Business info
+
+//To get Business info by Name
+app.get('/getbusiness', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+
+    businessUser.findOne({ buser: ''+req.param("uname") }, function(err, user) {
+            res.send(user);
+        }
+    )
+})
+
+//To get Businesses info by Name
+app.get('/getbusinesses', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+
+    businessUser.find({ buser: ''+req.param("uname") }, function(err, user) {
+            res.send(user);
+        }
+    )
+})
+
 //To retrieve all Businesses
-app.get('/getall', function(req, res){
+app.get('/getallbusiness', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
   
     
-    passco.find(function(err, passcos){
-        res.send(passcos);
+    businessUser.find(function(err, businessUsers){
+        res.send(businessUsers);
     })
 
 })
+
+
+//**Individual User Methods**
+
+//To register an Individual
+//To Find Individual by Name
+//To check business username availability
+//To set Individual Coordinates
+//To get Individual info
+app.get('/getindividual', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+
+    individualUser.findOne({ iuser: ''+req.param("uname") }, function(err, user) {
+            res.send(user);
+        }
+    )
+})
+
+//To retrieve all Individual Users
+app.get('/getallindividual', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+  
+    
+    individualUser.find(function(err, individualUsers){
+        res.send(individualUsers);
+    })
+
+})
+
+
+
+
 
 //To retrieve Social Studies Subjects
 app.get('/listss', function(req, res){
