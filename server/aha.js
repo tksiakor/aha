@@ -60,7 +60,7 @@ app.get('/registerbusiness', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
 
-    individualUser.create({
+    businessUser.create({
         buser:''+req.param("user"),
         bname:''+req.param("name"),
         baddress:''+req.param("address"),
@@ -68,7 +68,7 @@ app.get('/registerbusiness', function(req, res){
         bemail:''+req.param("email"),
         bphone:''+req.param("phone"),
         bconfirmphone:000,
-        bdescription:''req.param("description"),
+        bdescription:''+req.param("description"),
         blat:0,
         blong:0,
         bwebsite:''+req.param("website"),
@@ -271,7 +271,7 @@ app.get('/getindividualsbyname', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
     var regex = new RegExp(''+req.param("name"), 'i');  // 'i' makes it case insensitive
-    individualUser.find($or:[{ fname:regex }, {lname:regex}], function(err, user) {
+    individualUser.find({$or:[{ fname:regex }, {lname:regex}]}, function(err, user) {
             res.send(user);
         }
     )
