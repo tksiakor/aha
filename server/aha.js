@@ -83,12 +83,9 @@ app.get('/registerbusiness', function(req, res){
       }
       else{
       console.log(bname + " has been added to the db");
-      res.end("Registered");
+      res.end("1");
     }
-      
-
-})
-
+ })
 })
 
 
@@ -134,8 +131,8 @@ app.get('/setbcoordinates', function(req, res){
 app.get('/getbusiness', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
-
-    businessUser.findOne({ buser: ''+req.param("user") }, function(err, user) {
+    var regex = new RegExp(''+req.param("name"), 'i');  // 'i' makes it case insensitive
+    businessUser.findOne({ bname: regex }, function(err, user) {
             res.send(user);
         }
     )
@@ -145,15 +142,15 @@ app.get('/getbusiness', function(req, res){
 app.get('/getbusinesses', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
-
-    businessUser.find({ buser: ''+req.param("user") }, function(err, user) {
+    var regex = new RegExp(''+req.param("name"), 'i');  // 'i' makes it case insensitive
+    businessUser.find({ bname:regex }, function(err, user) {
             res.send(user);
         }
     )
 })
 
 //To retrieve all Businesses
-app.get('/getallindividuals', function(req, res){
+app.get('/getallbusinesses', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
   
@@ -161,7 +158,6 @@ app.get('/getallindividuals', function(req, res){
     businessUser.find(function(err, businessUsers){
         res.send(businessUsers);
     })
-
 })
 
 
@@ -194,12 +190,9 @@ app.get('/registerindividual', function(req, res){
       }
       else{
       console.log(bname + " has been added to the db");
-      res.end("Registered");
+      res.end("1");
     }
-      
-
-})
-
+    })
 })
 
 //To check business username availability
@@ -242,8 +235,20 @@ app.get('/seticoordinates', function(req, res){
 app.get('/getindividual', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
+    var regex = new RegExp(''+req.param("user"), 'i');  // 'i' makes it case insensitive
 
-    individualUser.findOne({ iuser: ''+req.param("user") }, function(err, user) {
+    individualUser.findOne({ iuser: regex }, function(err, user) {
+            res.send(user);
+        }
+    )
+})
+
+//To get Individuals by user
+app.get('/getindividuals', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    var regex = new RegExp(''+req.param("user"), 'i');  // 'i' makes it case insensitive
+    individualUser.find({ iuser:regex }, function(err, user) {
             res.send(user);
         }
     )
@@ -261,153 +266,18 @@ app.get('/getallindividual', function(req, res){
 
 })
 
+//To get Individuals by Name
+app.get('/getindividualsbyname', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    var regex = new RegExp(''+req.param("name"), 'i');  // 'i' makes it case insensitive
+    individualUser.find($or:[{ fname:regex }, {lname:regex}], function(err, user) {
+            res.send(user);
+        }
+    )
+})
 
 
-
-
-// //To retrieve Social Studies Subjects
-// app.get('/listss', function(req, res){
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST");
-
-//     socialTopic.find(function(err, topics){
-//         console.log("Working..");
-//         res.send(topics);
-//     })
-
-// })
-
-// //To retrieve by year
-
-// //To retrieve by Topic
-// app.get('/gettopic', function(req, res){
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST");
-
-//     passco.find({'topic': req.param("topic"), 'subject': req.param("subject")},function(err, passco1){
-//         console.log(req.param("topic")+ " " + req.param("subject") )
-//         res.send(passco1);
-//     })
-
-// })
-
-// //To insert
-// app.get('/insert', function(req, res){
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST")
-
-//     passco.create({
-//         year: [{year:''+req.param("year"), session:''+req.param("month")}],
-//         subject:''+req.param("subject"),
-//         topic: ''+req.param("topic"),
-//         question: ''+req.param("question"),
-//         ans_a: ''+req.param("a1"),
-//         ans_b:''+req.param("a2"),
-//         ans_c:''+req.param("a3"),
-//         ans_d:''+req.param("a4"),
-//         ans_e: ''+req.param("a5"),
-//         answer: req.param("ans")
-
-//     }, function (err, year, subject, topic, question, ans_a, ans_b, ans_c, ans_d, ans_e, answer) {
-//       if(err){
-
-//         console.log(err);
-//         console.log("There's a problem somewhere... Find it!");
-        
-//       }
-//       else{
-      
-//     }
-      
-
-// })
-
-// })
-
-// //USERS
-// //To add a user
-// app.get('/register', function(req, res){
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST");
-
-//     user.create({
-//         fname:''+req.param("fname"),
-//         lname: ''+req.param("lname"),
-//         username: ''+req.param("uname"),
-//         password: ''+req.param("pwd"),
-//        ssA: 0,
-//        ssB: 0,
-//        ssC: 0,
-//        ssTotal: 0,
-//         ssAMarks: 0,
-//         ssBMarks: 0,
-//         ssCMarks: 0
-
-//     }, function (err, fname, lname) {
-
-//       if(err){
-//         console.log(err);
-//         console.log("There's a problem with registering somewhere... Find it!");
-//         res.end("0");
-//       }
-//       else{
-//       console.log(fname + " " + lname + " has been added to the db");
-//       res.end("Registered");
-//     }
-      
-
-// })
-
-// })
-
-// //To auth user
-// app.get('/auth', function(req, res){
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST");
-//         //check if a user's password is valid like so:
-//         user.findOne({ username: ''+req.param("uname") }, function(err, user) {
-//             if (user.password === (''+req.param("pwd"))) {
-//                 // ... user is legit
-//                 console.log("user found");
-//                 res.end("1");
-//             }
-//             else{
-//             console.log("user not found");
-//             res.end("0");
-//         }
-//         })
-// })
-
-
-// //Retrieve a user and his/her marks
-// app.get('/getUser', function(req, res){
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST");
-
-//     user.findOne({ username: ''+req.param("uname") }, function(err, user) {
-//             res.send(user);
-//         }
-//     )
-// })
-
-
-// //Update marks
-// app.get('/setSSMarks', function(req, res){
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST");
-
-//     user.findOneAndUpdate({username:req.param("uname")}, {ssAMarks:req.param("A"),ssBMarks:req.param("B"), ssCMarks:req.param("C"), ssTotal:req.param("total")},function(err){
-//         if(err){
-//             console.log(err);
-//             res.end("Failed to Update");
-//         }
-//         else
-//         {
-//             res.end("Updated");
-//         }
-//     })
-
-// })
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Port:' + app.get('port'))
