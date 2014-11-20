@@ -1,13 +1,14 @@
 {
-  "name": "passco-server",
+  "name": "aha",
   "version": "0.9.1",
-  "main": "passco-server.js",
-  "description": "SE Project for passco-server",
+  "main": "aha.js",
+  "description": "AHA",
   "dependencies": {
     "express": "4.9.5",
     "http-server": "0.6.1",
     "ical": "0.3.1",
     "ical-generator": "0.1.8",
+    "googlemaps": "0.1.20",
     "mongoose": "^3.8.19"
   }
 }
