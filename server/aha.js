@@ -4,10 +4,37 @@ var app = express();
 var mongoose = require('mongoose');
 var gen = require('ical-generator'),
 	http = require('http');
+var gm = require('googlemaps');
+var util = require('util');	
+var geolib = require('geolib');
 	
 mongoose.connect('mongodb://127.0.0.1/ahaSchema'); 
 
 app.set('port', process.env.PORT || 3000);
+
+//*******GOOGLE MAPS**********
+
+//Configuration
+// gm._config{
+// 	google-client-id:"928051853607-dl8q6vnuv8f9k05cr20a41aku9co3n7a.apps.googleusercontent.com",
+// 	google-private-key:"AIzaSyDLoNzd2UM1i868hVkYXeyLFg7fDbubl0Y"
+// }
+//gm.config('google-client-id','928051853607-mf08ihadgp8ggqo24cj03vcgg4f4kk0b.apps.googleusercontent.com');
+gm.config('key',"AIzaSyDLoNzd2UM1i868hVkYXeyLFg7fDbubl0Y");
+
+//To get directions from a given location to another
+app.get('/getdirection', function(req, res){
+	gm.directions(''+req.param("olat")+','+req.param("olong"), req.param("dlat")+','+req.param("dlong") ,function(err, data){
+	//gm.directions('5.6206,-0.1743', '5.7454954,0.106685' ,function(err, data){
+		if(err){
+
+			console.log(err);
+
+		}
+		res.send(JSON.stringify(data));
+	}) 
+
+})
 
 
 //STRUCTURES************************
@@ -25,6 +52,11 @@ var businessSchema = new mongoose.Schema({
 	blong:{type:Number},
 	bwebsite:{type:String},
 	hits:{type:Number},
+	weekend_open:{type:String},
+	weekend_close:{type:String},
+	weekday_open:{type:String},
+	weekday_close:{type:String},
+	logo:{type:String},
 	pic:{type:String}
 
 
@@ -194,6 +226,49 @@ app.get('/hitbusiness', function(req, res){
 //To save Business pic
 app.get('/savebusinesspic', function(req, res){
 	 businessUser.findOneAndUpdate({buser:req.param("user")}, {pic:req.param("pic")},function(err){
+		if(err){
+			console.log(err);
+			res.end("0");
+		}
+		else
+		{
+			res.end("1");
+		}
+	})
+})
+
+//To save Business logo
+app.get('/savebusinesslogo', function(req, res){
+	 businessUser.findOneAndUpdate({buser:req.param("user")}, {logo:req.param("logo")},function(err){
+		if(err){
+			console.log(err);
+			res.end("0");
+		}
+		else
+		{
+			res.end("1");
+		}
+	})
+})
+
+
+//To set weekend times
+app.get('/setweekend', function(req, res){
+	 businessUser.findOneAndUpdate({buser:req.param("user")}, {weekend_open:req.param("weekend_open"),weekend_close:req.param("weekend_close")},function(err){
+		if(err){
+			console.log(err);
+			res.end("0");
+		}
+		else
+		{
+			res.end("1");
+		}
+	})
+})
+
+//To set weekday times
+app.get('/setweekday', function(req, res){
+	 businessUser.findOneAndUpdate({buser:req.param("user")}, {weekday_open:req.param("weekday_open"),weekday_close:req.param("weekday_close")},function(err){
 		if(err){
 			console.log(err);
 			res.end("0");
@@ -475,6 +550,9 @@ app.get('/savesitepic', function(req, res){
 		}
 	})
 })
+
+
+
 
 
 http.createServer(app).listen(app.get('port'), function(){

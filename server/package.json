@@ -1,8 +1,8 @@
 {
-  "name": "passco-server",
+  "name": "aha",
   "version": "0.9.1",
-  "main": "passco-server.js",
-  "description": "SE Project for passco-server",
+  "main": "aha.js",
+  "description": "AHA",
   "dependencies": {
     "express": "4.9.5",
     "http-server": "0.6.1",
