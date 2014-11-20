@@ -6,7 +6,7 @@ var gen = require('ical-generator'),
 	http = require('http');
 var gm = require('googlemaps');
 var util = require('util');	
-v//ar geolib = require('geolib');
+//ar geolib = require('geolib');
 	
 mongoose.connect('mongodb://127.0.0.1/ahaSchema'); 
 
