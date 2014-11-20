@@ -4,6 +4,8 @@ angular.module('aha.controllers', [])
   // Form data for the login modal
   $scope.loginData = {};
 
+  $scope.appTitle = "@AHA";
+
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -34,11 +36,23 @@ angular.module('aha.controllers', [])
 })
 
 .controller('UsersCtrl', function($scope, UsersFactory) {
-  $scope.users = UsersFactory.getUsersList();
+  $scope.users = UsersFactory.getUsersDetails();
 })
 
 .controller('UserCtrl', function($scope, $stateParams, UsersFactory) {
   $scope.user = UsersFactory.getUserDetails($stateParams.userName);
+  //console.log('Sending username: ' + $scope.username);
+  //console.log('Return value: '+UsersFactory.getUserDetails($scope.username).name);
+})
+
+.controller('BizsCtrl', function($scope, BizsFactory) {
+  $scope.bizs = BizsFactory.getBizsDetails();
+  $scope.search = undefined; 
+})
+
+.controller('BizCtrl', function($scope, $stateParams, BizsFactory) {
+  $scope.biz = BizsFactory.getBizDetails($stateParams.userName);
+  console.log("Passing: " + $stateParams.userName);
   //console.log('Sending username: ' + $scope.username);
   //console.log('Return value: '+UsersFactory.getUserDetails($scope.username).name);
 })

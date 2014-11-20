@@ -44,7 +44,7 @@ angular.module('aha', ['ionic', 'aha.controllers', 'aha.factories', 'aha.directi
       views: {
         'menuContent' :{
           templateUrl: "templates/home.html",
-          controller: "UsersCtrl"
+          controller: "BizsCtrl"
         }
       }
     })
@@ -76,8 +76,36 @@ angular.module('aha', ['ionic', 'aha.controllers', 'aha.factories', 'aha.directi
           controller: 'UserCtrl'
         }
       }
+    })
+    .state('app.bizs', {
+      url: "/bizs",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/bizs.html",
+          controller: "BizsCtrl"
+        }
+      }
+    })
+    .state('app.biz', {
+      url: "/bizs/:userName",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/biz.html",
+          controller: 'BizCtrl'
+        }
+      }
+    })
+
+    .state('app.biz.name', {
+      url: "/name/{name}",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/biz.html",
+          controller: 'BizCtrl'
+        }
+      }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/users');
+  $urlRouterProvider.otherwise('/app/home');
 });
 

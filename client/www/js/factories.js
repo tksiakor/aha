@@ -10,23 +10,8 @@ angular.module('aha.factories', [])
 	    { name: 'Unconfirmed Person', id: 6, username: '@tanzania', pic: 'img/mcfly.jpg', full: 'img/delorean.jpg'}
 	];
 
-	var UsersList = [
-		{ name: 'Kpetermeni Siakor', username: '@kpetermeni', distance: 222},
-	    { name: 'Shamir Adjaku', username: '@shamireyram', distance: 100},
-	    { name: 'Senanu Fiam-Coblavie', username: '@senanufc', distance: 180},
-	    { name: 'Sheila Plange', username: '@missplange', distance: 110},
-	    { name: 'Sharon Melomey', username: '@mawuena', distance: 380},
-	    { name: 'Unconfirmed Person', username: '@tanzania', distance: 242}
-
-	];
-
-	
-
 	var factory = {};
-	factory.getUsersList = function(){
-		return UsersList;
-	};
-	
+
 	factory.getUserDetails = function(username){
 		var userDetails = "";
 		angular.forEach(UsersDetails, function(value, key){
@@ -42,12 +27,36 @@ angular.module('aha.factories', [])
 		return userDetails;
 	};
 
-
 	factory.getUsersDetails = function(){
 		return	UsersDetails;
 	};
-	factory.postPerson = function(person){
 
+	return factory;
+})
+.factory('BizsFactory', function () {
+	
+	var BizsDetails = [
+		{ name: 'Ashesi University College', username: '@Ashesi', address: "1 University Avenue, Berekuso, Greater Accra, Ghana", phone: '0302-674-583',  lat: 5.759279, lon: -0.2200910000000249, pic: 'img/mcfly.jpg', full: 'img/delorean.jpg', logo: 'img/ashesil.jpg', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company."},
+	    { name: 'Papaye Fast Foods', username: '@Papaye',address: "Vodafone Ghana Head Quarters, Airport By-Pass road, Accra, Greater Accra, Ghana", phone: '0302-674-583', lat: 5.55966, lon: -0.1820470000000114, pic: 'img/mcfly.jpg', full: 'img/delorean.jpg', logo: 'img/delorean.jpg', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company."},
+	    { name: 'National Theatre', username: '@NatTheatre', address: "Vodafone Ghana Head Quarters, Airport By-Pass road, Accra, Greater Accra, Ghana", phone: '0302-674-583', lat: 5.55, lon: -0.20000000000004547, pic: 'img/mcfly.jpg', full: 'img/delorean.jpg', logo: 'img/delorean.jpg', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company."},
+	    { name: 'Accra Mall', username: '@AccraMall', address: "Vodafone Ghana Head Quarters, Airport By-Pass road, Accra, Greater Accra, Ghana", phone: '0302-674-583', lat: 5.621714, lon: -0.1736879999999701, pic: 'img/mcfly.jpg', full: 'img/delorean.jpg', logo: 'img/delorean.jpg', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company."},
+	    { name: 'Vodafone Ghana', address: "Vodafone Ghana Headquarters, Airport By-Pass road, Accra, Greater Accra, Ghana", username: '@Vodafone', phone: '0302-100-000', lat: 5.599984, lon: -0.17611399999998412, pic: 'img/mcfly.jpg', full: 'img/vodafone.jpg', logo: 'img/logo.png', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company."}
+	];
+
+	var factory = {};
+
+	factory.getBizDetails = function(username){
+		var bizDetails = "";
+		angular.forEach(BizsDetails, function(value, key){
+			console.log('BizName is: '+ username);
+			if(angular.equals(value.username,username))
+				bizDetails = value;
+		});
+		return bizDetails;
+	};
+	
+	factory.getBizsDetails = function(){
+		return BizsDetails;
 	};
 	return factory;
 });
