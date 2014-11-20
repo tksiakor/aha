@@ -33,17 +33,24 @@ angular.module('aha.controllers', [])
   };
 })
 
-.controller('UsersCtrl', function($scope) {
-  $scope.users = [
-    { name: 'Kpetermeni Siakor', id: 1, username: '@kpetermeni' },
-    { name: 'Shamir Adjaku', id: 2, username: '@shamireyram' },
-    { name: 'Senanu Fiam-Coblavie', id: 3, username: '@senanufc' },
-    { name: 'Sheila Plange', id: 4 , username: '@missplange'},
-    { name: 'Sharon Melomey', id: 5, username: '@mawuena' },
-    { name: 'Unconfirmed Person', id: 6, username: '@tanzania' }
-  ];
+.controller('UsersCtrl', function($scope, UsersFactory) {
+  $scope.users = UsersFactory.getUsersList();
 })
 
-.controller('UserCtrl', function($scope, $stateParams) {
-  $scope.username = $stateParams.userName;
+.controller('UserCtrl', function($scope, $stateParams, UsersFactory) {
+  $scope.user = UsersFactory.getUserDetails($stateParams.userName);
+  //console.log('Sending username: ' + $scope.username);
+  //console.log('Return value: '+UsersFactory.getUserDetails($scope.username).name);
+})
+
+.controller('SearchForm', function($scope){
+  $scope.location = '';
+
+  $scope.doSearch = function(){
+      if($scope.location === ''){
+          alert('Directive did not update the location property in parent controller.');
+      } else {
+          alert('Yay. Location: ' + $scope.location);
+      }
+  };
 });
