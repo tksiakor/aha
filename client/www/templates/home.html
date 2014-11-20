@@ -1,0 +1,21 @@
+<ion-view title="Home">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header">
+  <div class="bar bar-header item-input-inset">
+	  <label class="item-input-wrapper">
+	    <i class="icon ion-ios7-search placeholder-icon"></i>
+	    <google-places location=location></google-places>
+	    <!--<input type="search" placeholder="Eg. @accramall" ng-model="search">-->
+	  </label>
+	  <button class="button button-clear">Cancel</button>
+	</div>
+    <div class="item" ng-model="results" ng-repeat="result in searchResults">
+    	{{result.username}}	
+    </div>
+
+
+  </ion-content>
+</ion-view>

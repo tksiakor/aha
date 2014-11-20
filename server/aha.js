@@ -13,7 +13,7 @@ app.set('port', process.env.PORT || 3000);
 //STRUCTURES************************
 //business entity Schema definition
 var businessSchema = new mongoose.Schema({
-    buser:{type:String},
+    buser:{type:String, unique:true},
     bname:{type:String},
     baddress:{type:String},
     bcity:{type:String},
@@ -24,14 +24,15 @@ var businessSchema = new mongoose.Schema({
     blat:{type:Number},
     blong:{type:Number},
     bwebsite:{type:String},
-    hits:{type:Number}
+    hits:{type:Number},
+    pic:{type:String}
 
 
 })
 
 //individuals schema definition
 var individualSchema = new mongoose.Schema({
-    iuser:{type:String},
+    iuser:{type:String, unique:true},
     fname:{type:String},
     lname:{type:String},
     iaddress:{type:String},
@@ -41,13 +42,27 @@ var individualSchema = new mongoose.Schema({
     iconfirmphone:{type:String},
     ilat:{type:Number},
     ilong:{type:Number},
-    hits:{type:Number}
+    hits:{type:Number},
+    pic:{type:Number}
+
+})
+
+//Sites schema definition //UNDEFINED
+var siteSchema = new mongoose.Schema({
+    registeredby:{type:String},
+    sname:{type:String},
+    address:{type:String},
+    slat:{type:Number},
+    slong:{type:Number},
+    hits:{type:Number},
+    pic:{type:String}
 
 })
 
 //MODELS*************************
 var businessUser = mongoose.model('BUser', businessSchema, "BUser" );
 var individualUser = mongoose.model('IUser', individualSchema, "IUser");
+var site = mongoose.model('Site', siteSchema, 'Site'); //UNUSED
 
 
 
@@ -72,7 +87,8 @@ app.get('/registerbusiness', function(req, res){
         blat:0,
         blong:0,
         bwebsite:''+req.param("website"),
-        hits:0       
+        hits:0,
+       //pic:''+req.param("pic")       
 
     }, function (err, bname) {
 
@@ -113,7 +129,7 @@ app.get('/setbcoordinates', function(req, res){
     res.header("Access-Control-Allow-Methods", "GET, POST");
 
     businessUser.findOneAndUpdate({buser:req.param("user")}, {blat:req.param("lat"),blong:req.param("long")},function(err){
-        if(err){a
+        if(err){
             console.log(err);
             res.end("Failed to Update");
         }
@@ -160,6 +176,35 @@ app.get('/getallbusinesses', function(req, res){
     })
 })
 
+//To update Business hits
+app.get('/hitbusiness', function(req, res){
+    businessUser.findOneAndUpdate({buser:req.param("user")}, {hits:req.param("hits")},function(err){
+        if(err){
+            console.log(err);
+            res.end("0");
+        }
+        else
+        {
+            res.end("1");
+        }
+    })
+
+})
+
+//To save Business pic
+app.get('/savebusinesspic', function(req, res){
+     businessUser.findOneAndUpdate({buser:req.param("user")}, {pic:req.param("pic")},function(err){
+        if(err){
+            console.log(err);
+            res.end("0");
+        }
+        else
+        {
+            res.end("1");
+        }
+    })
+})
+
 
 //**Individual User Methods**
 
@@ -179,7 +224,8 @@ app.get('/registerindividual', function(req, res){
         iconfirmphone:000,
         ilat:0,
         ilong:0,
-        hits:0       
+        hits:0,
+        pic:''+req.param("pic")          
 
     }, function (err, bname) {
 
@@ -195,7 +241,7 @@ app.get('/registerindividual', function(req, res){
     })
 })
 
-//To check business username availability
+//To check individual username availability
 app.get('/authindividualname', function(req, res){
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST");
@@ -277,6 +323,159 @@ app.get('/getindividualsbyname', function(req, res){
     )
 })
 
+//To update Individual hits
+app.get('/hitindividual', function(req, res){
+    individualUser.findOneAndUpdate({iuser:req.param("user")}, {hits:req.param("hits")},function(err){
+        if(err){
+            console.log(err);
+            res.end("0");
+        }
+        else
+        {
+            res.end("1");
+        }
+    })
+})
+
+//To save Individual pic
+app.get('/saveindividualpic', function(req, res){
+     businessUser.findOneAndUpdate({iuser:req.param("user")}, {pic:req.param("pic")},function(err){
+        if(err){
+            console.log(err);
+            res.end("0");
+        }
+        else
+        {
+            res.end("1");
+        }
+    })
+})
+
+
+//**Site Methods**
+//To register a site
+app.get('/registersite', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+
+    site.create({
+        registeredby:''+req.param("user"),
+        sname:''+req.param("name"),
+        address:''+req.param("address"),
+        slat:''+req.param("lat"),
+        slong:''+req.param("long"),
+        hits:0,
+        pic:""
+
+
+    }, function (err, bname) {
+
+      if(err){
+        console.log(err);
+        console.log("There's a problem with registering somewhere... Find it!");
+        res.end("0");
+      }
+      else{
+      console.log(bname + " has been added to the db");
+      res.end("1");
+    }
+    })
+})
+
+
+
+//To set Site Coordinates
+app.get('/setscoordinates', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+
+    site.findOneAndUpdate({sname:req.param("name")}, {slat:req.param("lat"),slong:req.param("long")},function(err){
+        if(err){a
+            console.log(err);
+            res.end("Failed to Update");
+        }
+        else
+        {
+            res.end("Updated");
+        }
+    })
+
+})
+
+//To get Site info
+app.get('/getsite', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    var regex = new RegExp(''+req.param("name"), 'i');  // 'i' makes it case insensitive
+
+    site.findOne({sname: regex }, function(err, user) {
+            res.send(user);
+        }
+    )
+}) 
+
+//To get Sites by name
+app.get('/getsites', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    var regex = new RegExp(''+req.param("name"), 'i');  // 'i' makes it case insensitive
+    site.find({ sname:regex }, function(err, user) {
+            res.send(user);
+        }
+    )
+})
+
+//To retrieve all Sites 
+app.get('/getallsites', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+  
+    
+    site.find(function(err, Sites){
+        res.send(Sites);
+    })
+
+})
+
+//To get Sites by Users who sited
+app.get('/getsitesbyuser', function(req, res){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    var regex = new RegExp(''+req.param("user"), 'i');  // 'i' makes it case insensitive
+    site.find({$or:[{ registeredby:regex }, {lname:regex}]}, function(err, user) {
+            res.send(user);
+        }
+    )
+})
+
+//To update Site hits
+app.get('/hitsite', function(req, res){
+    businessUser.findOneAndUpdate({sname:req.param("name")}, {hits:req.param("hits")},function(err){
+        if(err){
+            console.log(err);
+            res.end("0");
+        }
+        else
+        {
+            res.end("1");
+        }
+    })
+
+})
+
+//To save Site pic
+app.get('/savesitepic', function(req, res){
+     businessUser.findOneAndUpdate({sname:req.param("name")}, {pic:req.param("pic")},function(err){
+        if(err){
+            console.log(err);
+            res.end("0");
+        }
+        else
+        {
+            res.end("1");
+        }
+    })
+})
 
 
 http.createServer(app).listen(app.get('port'), function(){

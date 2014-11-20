@@ -4,7 +4,7 @@
 // 'aha' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'aha.controllers' is found in controllers.js
-angular.module('aha', ['ionic', 'aha.controllers'])
+angular.module('aha', ['ionic', 'aha.controllers', 'aha.factories', 'aha.directives'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -39,11 +39,12 @@ angular.module('aha', ['ionic', 'aha.controllers'])
       }
     })
 
-    .state('app.browse', {
-      url: "/browse",
+    .state('app.home', {
+      url: "/home",
       views: {
         'menuContent' :{
-          templateUrl: "templates/browse.html"
+          templateUrl: "templates/home.html",
+          controller: "UsersCtrl"
         }
       }
     })
@@ -52,13 +53,23 @@ angular.module('aha', ['ionic', 'aha.controllers'])
       views: {
         'menuContent' :{
           templateUrl: "templates/users.html",
-          controller: 'UsersCtrl'
+          controller: "UsersCtrl"
         }
       }
     })
 
     .state('app.user', {
       url: "/users/:userName",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/user.html",
+          controller: 'UserCtrl'
+        }
+      }
+    })
+
+    .state('app.user.name', {
+      url: "/name/{name}",
       views: {
         'menuContent' :{
           templateUrl: "templates/user.html",
