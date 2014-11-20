@@ -43,7 +43,7 @@ var individualSchema = new mongoose.Schema({
 	ilat:{type:Number},
 	ilong:{type:Number},
 	hits:{type:Number},
-	pic:{type:Number}
+	pic:{type:String}
 
 })
 
@@ -225,9 +225,9 @@ app.get('/registerindividual', function(req, res){
 		ilat:0,
 		ilong:0,
 		hits:0,
-		pic:''+req.param("pic")          
+		//pic:''+req.param("pic")          
 
-	}, function (err, bname) {
+	}, function (err, iname) {
 
 	  if(err){
 		console.log(err);
@@ -235,7 +235,7 @@ app.get('/registerindividual', function(req, res){
 		res.end("0");
 	  }
 	  else{
-	  console.log(bname + " has been added to the db");
+	  console.log(iname + " has been added to the db");
 	  res.end("1");
 	}
 	})
