@@ -1,0 +1,213 @@
+<ion-view title="">
+    <!--<ion-content >-->
+    <!--<div class="tabs-striped tabs-top tabs-background-assertive tabs-light">-->
+    <!--<div class="tabs">-->
+
+    <!--<a class="tab-item active" href="#/app/individual">-->
+    <!--<i class="icon">Individual</i>-->
+    <!--&lt;!&ndash;<ion-nav-view name="home-tab"></ion-nav-view>&ndash;&gt;-->
+    <!--&lt;!&ndash;Individual&ndash;&gt;-->
+
+    <ion-tabs class="tabs-striped tabs-top tabs-background-assertive tabs-light">
+
+        <ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline">
+            <!-- Tab 1 content -->
+
+            <ion-content>
+
+                <div class="list">
+            <form  name="individualForm" novalidate ng-submit="individualSignup()" >
+                <label class="item item-input">
+                        <span class="input-label">First Name</span>
+                        <input type="text"
+                               placeholder="Kwaku"
+                                name="firstName"
+                                ng-model="signup.individual.firstName"
+                                required>
+                    </label>
+                <p style="color:red" ng-show="individualForm.firstName.$dirty && individualForm.firstName.$invalid">
+                    <span ng-show="individualForm.firstName.$error.required">Username is required.</span>
+                </p>
+
+
+                <label class="item item-input">
+                        <span class="input-label">Last Name</span>
+                        <input type="text"
+                               placeholder="Mensah"
+                                name="lastName"
+                                ng-model="signup.individual.lastName"
+                                required>
+                    </label>
+                <p style="color:red" ng-show="individualForm.lastName.$dirty && individualForm.lastName.$invalid">
+                    <span ng-show="individualForm.lastName.$error.required">Username is required.</span>
+                </p>
+
+                    <label class="item item-input">
+                        <span class="input-label">Username</span>
+                        <input type="text"
+                               placeholder="@kwaku"
+                                name="username"
+                                ng-model="signup.individual.username">
+                    </label>
+                <p style="color:red" ng-show="individualForm.username.$dirty && individualForm.username.$invalid">
+                    <span ng-show="individualForm.username.$error.required">Username is required.</span>
+                </p>
+
+                    <label class="item item-input">
+                        <span class="input-label">Phone Number</span>
+                        <input type="tel"
+                               placeholder="0201234567"
+                                name="phoneNumber"
+                                ng-model="signup.individual.phoneNumber"
+                                maxlength="10"
+                                required>
+                    </label>
+                <p style="color:red" ng-show="individualForm.phoneNumber.$dirty && individualForm.phoneNumber.$invalid">
+                    <span ng-show="individualForm.phoneNumber.$error.required">Username is required.</span>
+                </p>
+
+                    <input type="submit"
+                           ng-disabled="individualForm.$invalid"  value="Register this location" class="button button-block button-assertive">
+
+                    </form>
+                </div>
+            </ion-content>
+        </ion-tab>
+
+
+        <ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline">
+            <!-- Tab 3 content -->
+            <ion-content>
+
+                <form name="businessForm" novalidate ng-submit="businessSignup()">
+                    <div class="list">
+
+                        <label class="item item-input">
+                            <span class="input-label">Business Name</span>
+                            <input type="text"
+                                   placeholder="My Shop"
+                                   name="businessName"
+                                   ng-model="signup.business.businessName"
+                                   required/>
+                        </label>
+                        <!--<div ng-if=" businessForm.businessName.$invalid &&businessForm.$submitted" >-->
+                        <!--<div ng-message="required">Business name is reqired</div>-->
+                        <!--</div>-->
+                         <p style="color:red" ng-show="businessForm.businessName.$dirty && businessForm.businessName.$invalid">
+                            <span ng-show="businessForm.businessName.$error.required">Username is required.</span>
+                         </p>
+
+
+
+                        <label class="item item-input">
+                        <span class="input-label">Business' handle</span>
+                        <input type="text"
+                        placeholder="#myshop"
+                        name="businessHandle"
+                        ng-model="signup.business.businessHandle"
+                        required/>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.businessHandle.$dirty && businessForm.businessHandle.$invalid">
+                            <span ng-show="businessForm.businessHandle.$error.required">Business handle is required</span>
+                        </p>
+
+                        <label class="item item-input">
+                        <span class="input-label">Physical Address</span>
+                        <input type="text"
+                        placeholder="Number 4 Otublohu Street"
+                        name="businessAddress"
+                        ng-model="signup.business.businessAddress"
+                        required/>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.businessAddress.$dirty && businessForm.businessAddress.$invalid">
+                            <span ng-show="businessForm.businessAddress.$error.required">Address is required</span>
+                        </p>
+
+                        <label class="item item-input">
+                        <span class="input-label">City</span>
+                        <input type="text"
+                        placeholder="Accra"
+                        name="city"
+                        ng-model="signup.business.city"
+                        required/>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.city.$dirty && businessForm.city.$invalid">
+                            <span ng-show="businessForm.city.$error.required">City is required</span>
+                        </p>
+
+                        <label class="item item-input">
+                        <span class="input-label">Phone Number</span>
+                        <input type="tel"
+                        placeholder="0301234567"
+                        name="phoneNumber"
+                        ng-model="signup.business.phoneNumber"
+                        min="10"
+                        maxlength="10"
+                        required/>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.phoneNumber.$dirty && businessForm.phoneNumber.$invalid">
+                            <span ng-show="businessForm.phoneNumber.$error.required">Phone Number is required</span>
+                        </p>
+
+                        <label class="item item-input">
+                        <span class="input-label">Type</span>
+                        <input type="text"
+                        placeholder="type"
+                        name="type"
+                        ng-model="signup.business.type"
+                        required/>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.type.$dirty && businessForm.type.$invalid">
+                            <span ng-show="businessForm.type.$error.required">Business type is required</span>
+                        </p>
+
+                        <label class="item item-input">
+                        <span class="input-label">Description</span>
+                        <textarea maxlength="250"
+                        placeholder="Information about the company"
+                        name="description"
+                        ng-model="signup.business.description"
+                        required></textarea>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.description.$dirty && businessForm.description.$invalid">
+                            <span ng-show="businessForm.description.$error.required">Description handle is required</span>
+                        </p>
+
+                        <label class="item item-input">
+                        <span class="input-label">Website</span>
+                        <input type="url"
+                        placeholder="http://www.company.com"
+                        name="website"
+                        ng-model="signup.business.website"
+                        required/>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.website.$dirty && businessForm.website.$invalid">
+                            <span ng-show="businessForm.website.$error.required">Website handle is required</span>
+                        </p>
+
+                        <label class="item item-input">
+                        <span class="input-label">Email</span>
+                        <input type="email"
+                        placeholder="email@email.com"
+                        name="email"
+                        ng-model="signup.business.email"
+                        required/>
+                        </label>
+                        <p style="color:red" ng-show="businessForm.email.$dirty && businessForm.email.$invalid">
+                            <span ng-show="businessForm.email.$error.required">email handle is required</span>
+                        </p>
+
+                        <!--<button class="button button-block button-assertive">-->
+                        <!--Registration-->
+                        <!--</button>-->
+                        <input type="submit"
+                               ng-disabled="businessForm.$invalid"  value="Register this location" class="button button-block button-assertive">
+
+
+                    </div>
+                </form>
+            </ion-content>
+        </ion-tab>
+
+    </ion-tabs>
+</ion-view>
