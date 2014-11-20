@@ -9,6 +9,9 @@
 /getallbusinesses<br />
 /hitbusiness?user&hits <br />
 /savebusinesspic?user&pic <br />
+/savebusinesslogo?user&logo <br />
+/setweekday?user&weekday_open&weekday_close <br />
+/setweekend?user&weekend_open&weekend_close <br />
 
 ### Individual Methods
 /registerindividual?user&fname&lname&address&city&email&phone <br />
@@ -31,3 +34,6 @@
 /getsitesbyuser?user <br />
 /hitsite?name&hits <br />
 /savesitepic?name&pic <br />
+
+### Mapping Methods
+/getdirection?olat&olong&dlat&dlong <br />
