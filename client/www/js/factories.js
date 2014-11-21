@@ -23,7 +23,6 @@ angular.module('aha.factories', [])
             {name: 'Sheila Plange', username: '@missplange', distance: 110},
             {name: 'Sharon Melomey', username: '@mawuena', distance: 380},
             {name: 'Unconfirmed Person', username: '@tanzania', distance: 242}
-
         ];
 
 
@@ -32,8 +31,6 @@ angular.module('aha.factories', [])
             return UsersList;
         };
 
-
-
         factory.getUserDetails = function (username) {
             var userDetails = "";
             angular.forEach(UsersDetails, function (value, key) {
@@ -41,10 +38,6 @@ angular.module('aha.factories', [])
                 username);
                 if (angular.equals(value.username, username))
                     userDetails = value;
-                // else
-                // 	//userDetails = "Nothing found";
-                // 	console.log("Value: " + value.username + " Param: " + username);
-                // 	//return "Nothing Found";
             });
 
             return userDetails;
@@ -60,11 +53,11 @@ angular.module('aha.factories', [])
         return factory;
     })
 
+
     .factory('Registrar', function ($http) {
         var url = "http://128.199.54.243:3000";
         var path;
         var factory = {};
-        // var response;
         factory.register = function (data, accountType) {
             console.log("register called");
             if (accountType == 1) {
@@ -74,21 +67,9 @@ angular.module('aha.factories', [])
                 "&lname=" + data.lastName +
                 "&phone=" + data.phoneNumber;
                 console.log("individual url " + url + path);
-                //$http.get(url + path)
-                //    .success(function (response) {
-                //        console.log(response);
-                //        if (response == 1) {
-                //            return 1;
-                //        }
-                //        else {
-                //            return 0;
-                //        }
-                //    });
                 return $http({method:"GET", url:url+path}).then(function(result){
                     return result.data;
                 });
-                //console.log("individual registered response " + response);
-                //return response;
             }
             else if (accountType == 2) {
                 path = "/registerbusiness?" +
@@ -101,21 +82,9 @@ angular.module('aha.factories', [])
                 "&description=" + data.description +
                 "&website=" + data.website;
                 console.log(url + path);
-                //$http.get(url + path)
-                //    .success(function (response) {
-                //        console.log(response);
-                //        if (response == 1) {
-                //            return 1;
-                //        }
-                //        else {
-                //            return 0;
-                //        }
-                //    });
                 return $http({method:"GET", url:url+path}).then(function(result){
                     return result.data;
                 });
-                //console.log("business registered response " + response);
-                //return response;
             }
             else {
                 console.log("invalid registration data");

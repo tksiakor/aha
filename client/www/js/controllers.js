@@ -3,8 +3,37 @@ angular.module('starter.controllers', [])
     .controller('AppCtrl', function ($scope, $ionicModal, $timeout, Registrar,$location) {
 
         // Form data for the login modal
+
+
         $scope.loginData = {};
         $scope.signup = {};
+
+
+        $scope.currentLocation ={
+            longitude:"",
+            latitude:"",
+            getLocation:function(){
+                console.log("called in location");
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(this.showPosition)
+                } else {
+                    //x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+
+            },
+            showPosition:function(position) {
+                console.log("callback");
+                console.log(position.coords.longitude);
+                console.log(position.coords.latitude);
+
+                this.longitude= position.coords.longitude;
+                this.latitude= position.coords.latitude;
+
+            }
+
+        };
+
+        $scope.currentLocation.getLocation();
 
         if(typeof(Storage) !== "undefined") {
             console.log("storage");
@@ -21,6 +50,8 @@ angular.module('starter.controllers', [])
         }).then(function (modal) {
             $scope.modal = modal;
         });
+
+
 
 
         // Triggered in the login modal to close it
