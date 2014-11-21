@@ -8,11 +8,13 @@
 /getbusinesses?name<br />
 /getallbusinesses<br />
 /hitbusiness?user&hits <br />
+/resettodayhits?user <br />
 /savebusinesspic?user&pic <br />
 /savebusinesslogo?user&logo <br />
 /setweekday?user&weekday_open&weekday_close <br />
 /setweekend?user&weekend_open&weekend_close <br />
 /updateindividual?user&fname&lname <br />
+/gettopbusinesses <br />
 
 ### Individual Methods
 /registerindividual?user&fname&lname&address&city&email&phone <br />
@@ -23,6 +25,7 @@
 /getallindividuals<br />
 /getindividualsbyname?name<br />
 /hitindividual?user&hits <br />
+/gettopbusinesses <br />
 /saveindividualpic?user&pic <br />
 /updatebusiness?user&email&address&city&phone&description
 

@@ -47,9 +47,14 @@ app.get('/getdrivetime', function(req, res){
 	res.header("Access-Control-Allow-Methods", "GET, POST");
 	gm.directions(''+req.param("olat")+','+req.param("olong"), req.param("dlat")+','+req.param("dlong") ,function(err, data){
 	// gm.directions('5.6206,-0.1743', '5.7454954,0.106685' ,function(err, data){
-		if(err) throw err
-			
+		if(err){
+			console.log(err);
+			res.end("0");
+
+		}
+		else{
 		res.send(data.routes[0].legs[0].duration.text);
+	}
 	}) 
 
 })
@@ -72,6 +77,7 @@ var businessSchema = new mongoose.Schema({
 	blong:{type:Number},
 	bwebsite:{type:String},
 	hits:{type:Number},
+	hitstoday:{type:Number},
 	weekend_open:{type:String},
 	weekend_close:{type:String},
 	weekday_open:{type:String},
@@ -254,7 +260,7 @@ app.get('/getallbusinesses', function(req, res){
 app.get('/hitbusiness', function(req, res){
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Methods", "GET, POST");
-	businessUser.findOneAndUpdate({buser:req.param("user")}, {$inc:{hits:1}},function(err){
+	businessUser.findOneAndUpdate({buser:req.param("user")}, {$inc:{hits:1, hitstoday:1}},function(err){
 		if(err){
 			console.log(err);
 			res.end("0");
@@ -265,6 +271,23 @@ app.get('/hitbusiness', function(req, res){
 		}
 	})
 
+})
+
+
+//To reset today hits
+app.get('/resettodayhits', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+	businessUser.findOneAndUpdate({buser:req.param("user")}, {hitstoday:0},function(err){
+		if(err){
+			console.log(err);
+			res.end("0");
+		}
+		else
+		{
+			res.end("1");
+		}
+	})
 })
 
 //To save Business pic
@@ -331,6 +354,8 @@ app.get('/setweekday', function(req, res){
 		}
 	})
 })
+
+//To get 5 top hit businesses
 app.get('/gettopbusinesses', function(req, res){
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Methods", "GET, POST");
@@ -340,7 +365,7 @@ app.get('/gettopbusinesses', function(req, res){
 		res.send(user);
 	})
 })
-//To get 5 top hit businesses
+
 
 
 
