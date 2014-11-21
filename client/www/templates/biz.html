@@ -1,0 +1,42 @@
+<ion-view title="{{biz.username}}">
+  <ion-content class="has-header">
+    <div class="list card">
+
+  <div class="item item-avatar">
+    <img src="{{biz.logo}}">
+    <h2>{{biz.name}}</h2>
+    <p><i class="icon ion-ios7-circle-filled"></i>
+       <strong>Closed till 8 a.m.</strong> 
+    </p>
+  </div>
+
+  <div class="item item-body">
+    <img class="full-image" src="{{biz.full}}">
+    <p>
+      {{biz.desc}}
+    </p>
+    
+    <p><i class="icon ion-ios7-calendar-outline"></i>
+      <strong>Working Hours</strong>
+        <br />
+        Weekdays: {{biz.startWD}} - {{biz.endWD}}
+        <br />
+        Weekends: {{biz.startWE}} - {{biz.endWE}}
+      
+    </p>
+  </div>
+
+</div>
+  </ion-content>
+  <div class="tabs tabs-icon-left tabs-assertive">
+  <a class="tab-item" href="tel:{{biz.phone}}">
+      <i class="icon ion-ios7-telephone"></i>Call      
+    </a>
+    <a class="tab-item" href="#">
+      <i class="icon ion-arrow-graph-up-right"></i>Directions
+    </a>
+    <a class="tab-item" href="#">
+      <i class="icon ion-android-share"></i>Share
+    </a>
+</div>
+</ion-view>
