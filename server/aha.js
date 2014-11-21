@@ -24,6 +24,8 @@ gm.config('key',"AIzaSyDLoNzd2UM1i868hVkYXeyLFg7fDbubl0Y");
 
 //To get directions from a given location to another
 app.get('/getdirection', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	gm.directions(''+req.param("olat")+','+req.param("olong"), req.param("dlat")+','+req.param("dlong") ,function(err, data){
 	//gm.directions('5.6206,-0.1743', '5.7454954,0.106685' ,function(err, data){
 		if(err){
@@ -37,6 +39,24 @@ app.get('/getdirection', function(req, res){
 })
 
 
+//To get time from a given location to another
+app.get('/getdrivetime', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+	gm.directions(''+req.param("olat")+','+req.param("olong"), req.param("dlat")+','+req.param("dlong") ,function(err, data){
+	// gm.directions('5.6206,-0.1743', '5.7454954,0.106685' ,function(err, data){
+		if(err){
+
+			console.log(err);
+
+		}
+		res.send(data.routes[0].legs[0].duration.text);
+	}) 
+
+})
+
+
+
 //STRUCTURES************************
 //business entity Schema definition
 var businessSchema = new mongoose.Schema({
@@ -48,6 +68,7 @@ var businessSchema = new mongoose.Schema({
 	bphone:{type:String},
 	bconfirmphone:{type:String},
 	bdescription:{type:String},
+	type:{type:String},
 	blat:{type:Number},
 	blong:{type:Number},
 	bwebsite:{type:String},
@@ -114,6 +135,7 @@ app.get('/registerbusiness', function(req, res){
 		bcity:''+req.param("city"),
 		bemail:''+req.param("email"),
 		bphone:''+req.param("phone"),
+		type:''+req.param("type"),
 		bconfirmphone:000,
 		bdescription:''+req.param("description"),
 		blat:0,
@@ -151,6 +173,24 @@ app.get('/authbusinessname', function(req, res){
 			else{
 			console.log("user not found");
 			res.end("0");
+		}
+	 })
+})
+
+//To update business profile
+app.get('/updatebusiness', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+		//check if a user's password is valid like so:
+	   businessUser.findOneAndUpdate({ buser: ''+req.param("user") },{bemail:''+req.param("email"), baddress: ''+req.param("address"), bcity: ''+req.param("city"), bphone: ''+req.param("phone"), description: ''+req.param("description")}, function(err) {
+			if (err) {
+				// ... user is legit
+				console.log("err");
+				res.end("0");
+			}
+			else{
+			console.log("Updated");
+			res.end("1");
 		}
 	 })
 })
@@ -210,7 +250,9 @@ app.get('/getallbusinesses', function(req, res){
 
 //To update Business hits
 app.get('/hitbusiness', function(req, res){
-	businessUser.findOneAndUpdate({buser:req.param("user")}, {hits:req.param("hits")},function(err){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+	businessUser.findOneAndUpdate({buser:req.param("user")}, {$inc:{hits:1}},function(err){
 		if(err){
 			console.log(err);
 			res.end("0");
@@ -225,6 +267,8 @@ app.get('/hitbusiness', function(req, res){
 
 //To save Business pic
 app.get('/savebusinesspic', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	 businessUser.findOneAndUpdate({buser:req.param("user")}, {pic:req.param("pic")},function(err){
 		if(err){
 			console.log(err);
@@ -239,6 +283,8 @@ app.get('/savebusinesspic', function(req, res){
 
 //To save Business logo
 app.get('/savebusinesslogo', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	 businessUser.findOneAndUpdate({buser:req.param("user")}, {logo:req.param("logo")},function(err){
 		if(err){
 			console.log(err);
@@ -254,6 +300,8 @@ app.get('/savebusinesslogo', function(req, res){
 
 //To set weekend times
 app.get('/setweekend', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	 businessUser.findOneAndUpdate({buser:req.param("user")}, {weekend_open:req.param("weekend_open"),weekend_close:req.param("weekend_close")},function(err){
 		if(err){
 			console.log(err);
@@ -268,6 +316,8 @@ app.get('/setweekend', function(req, res){
 
 //To set weekday times
 app.get('/setweekday', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	 businessUser.findOneAndUpdate({buser:req.param("user")}, {weekday_open:req.param("weekday_open"),weekday_close:req.param("weekday_close")},function(err){
 		if(err){
 			console.log(err);
@@ -330,6 +380,25 @@ app.get('/authindividualname', function(req, res){
 			else{
 			console.log("user not found");
 			res.end("0");
+		}
+	 })
+})
+
+
+//To update individual profile
+app.get('/updateindividual', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+		//check if a user's password is valid like so:
+	   individualUser.findOneAndUpdate({ iuser: ''+req.param("user") },{fname:''+req.param("fname"), lname: ''+req.param("lname"), iphone: ''+req.param("phone")}, function(err) {
+			if (err) {
+				// ... user is legit
+				console.log("err");
+				res.end("0");
+			}
+			else{
+			console.log("Updated");
+			res.end("1");
 		}
 	 })
 })
@@ -414,6 +483,8 @@ app.get('/hitindividual', function(req, res){
 
 //To save Individual pic
 app.get('/saveindividualpic', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	 businessUser.findOneAndUpdate({iuser:req.param("user")}, {pic:req.param("pic")},function(err){
 		if(err){
 			console.log(err);
@@ -525,6 +596,8 @@ app.get('/getsitesbyuser', function(req, res){
 
 //To update Site hits
 app.get('/hitsite', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	businessUser.findOneAndUpdate({sname:req.param("name")}, {hits:req.param("hits")},function(err){
 		if(err){
 			console.log(err);
@@ -539,6 +612,8 @@ app.get('/hitsite', function(req, res){
 
 //To save Site pic
 app.get('/savesitepic', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	 businessUser.findOneAndUpdate({sname:req.param("name")}, {pic:req.param("pic")},function(err){
 		if(err){
 			console.log(err);
@@ -553,6 +628,8 @@ app.get('/savesitepic', function(req, res){
 
 
 app.get('/printmap', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
 	
 //gm.directions('5.6206,-0.1743', '5.7454954,0.106685'
 
@@ -583,7 +660,7 @@ paths = [
 ]
 
 console.log("Outing map....");
-res.send(gm.staticMap(mid, 14, '500x400', false, false, 'roadmap', markers, styles, paths));
+	res.send(gm.staticMap(mid, 14, '500x400', false, false, 'roadmap', markers, styles, paths));
 })
 
 
