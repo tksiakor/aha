@@ -61,6 +61,7 @@ angular.module('aha.factories', [])
 	return factory;
 })
 
+
 .factory('Registrar', function ($http) {
 var url = "http://128.199.54.243:3000";
 var path;

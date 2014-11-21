@@ -5,8 +5,12 @@
   <div class="item item-avatar">
     <img src="{{biz.logo}}">
     <h2>{{biz.name}}</h2>
-    <p><i class="icon ion-ios7-circle-filled"></i>
-       <strong>Closed till 8 a.m.</strong> 
+    <p ng-show="{{open}}"><i class="icon ion-ios7-circle-filled"></i>
+       <strong>Open till {{biz.endWD}}</strong> 
+    </p>
+
+    <p ng-show="{{!open}}"><i class="icon ion-ios7-circle-filled"></i>
+       <strong>Closed till {{biz.startWD}}</strong> 
     </p>
   </div>
 
@@ -24,6 +28,8 @@
         Saturday: {{biz.startWE}} - {{biz.endWE}}
         <br />
         Saturday: Closed all day
+        <br />
+        Drive Time: {{dt}}
         <br />
         <br />
     </p>
