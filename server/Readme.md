@@ -1,7 +1,7 @@
 ## NODEJS SERVER README METHOD-QUERIES
 
 ### Business Methods
-/registerbusiness?user&name&address&city&email&phone&description&website <br />
+/registerbusiness?user&name&address&city&email&phone&description&website&type <br />
 /authbusinessname?user <br />
 /setcoordinates?user&lat&long<br />
 /getbusiness?name<br />
@@ -12,6 +12,7 @@
 /savebusinesslogo?user&logo <br />
 /setweekday?user&weekday_open&weekday_close <br />
 /setweekend?user&weekend_open&weekend_close <br />
+/updateindividual?user&fname&lname <br />
 
 ### Individual Methods
 /registerindividual?user&fname&lname&address&city&email&phone <br />
@@ -19,10 +20,11 @@
 /seticoordinates?user&lat&long<br />
 /getindividual?user<br />
 /getindividuals?user<br />
-/getallindividual<br />
+/getallindividuals<br />
 /getindividualsbyname?name<br />
 /hitindividual?user&hits <br />
 /saveindividualpic?user&pic <br />
+/updatebusiness?user&email&address&city&phone&description
 
 
 ### Site Methods

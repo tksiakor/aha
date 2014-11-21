@@ -48,6 +48,7 @@ var businessSchema = new mongoose.Schema({
 	bphone:{type:String},
 	bconfirmphone:{type:String},
 	bdescription:{type:String},
+	type:{type:String},
 	blat:{type:Number},
 	blong:{type:Number},
 	bwebsite:{type:String},
@@ -114,6 +115,7 @@ app.get('/registerbusiness', function(req, res){
 		bcity:''+req.param("city"),
 		bemail:''+req.param("email"),
 		bphone:''+req.param("phone"),
+		type:''+req.param("type"),
 		bconfirmphone:000,
 		bdescription:''+req.param("description"),
 		blat:0,
@@ -151,6 +153,24 @@ app.get('/authbusinessname', function(req, res){
 			else{
 			console.log("user not found");
 			res.end("0");
+		}
+	 })
+})
+
+//To update business profile
+app.get('/updatebusiness', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+		//check if a user's password is valid like so:
+	   businessUser.findOneAndUpdate({ buser: ''+req.param("user") },{bemail:''+req.param("email"), baddress: ''+req.param("address"), bcity: ''+req.param("city"), bphone: ''+req.param("phone"), description: ''+req.param("description")}, function(err) {
+			if (err) {
+				// ... user is legit
+				console.log("err");
+				res.end("0");
+			}
+			else{
+			console.log("Updated");
+			res.end("1");
 		}
 	 })
 })
@@ -330,6 +350,25 @@ app.get('/authindividualname', function(req, res){
 			else{
 			console.log("user not found");
 			res.end("0");
+		}
+	 })
+})
+
+
+//To update individual profile
+app.get('/updateindividual', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+		//check if a user's password is valid like so:
+	   individualUser.findOneAndUpdate({ iuser: ''+req.param("user") },{fname:''+req.param("fname"), lname: ''+req.param("lname"), iphone: ''+req.param("phone")}, function(err) {
+			if (err) {
+				// ... user is legit
+				console.log("err");
+				res.end("0");
+			}
+			else{
+			console.log("Updated");
+			res.end("1");
 		}
 	 })
 })
@@ -583,7 +622,7 @@ paths = [
 ]
 
 console.log("Outing map....");
-res.send(gm.staticMap(mid, 14, '500x400', false, false, 'roadmap', markers, styles, paths));
+	res.send(gm.staticMap(mid, 14, '500x400', false, false, 'roadmap', markers, styles, paths));
 })
 
 
