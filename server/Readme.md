@@ -37,3 +37,4 @@
 
 ### Mapping Methods
 /getdirection?olat&olong&dlat&dlong <br />
+/printmap?olat&olong&dlat&dlong <br />

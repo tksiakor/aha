@@ -552,6 +552,41 @@ app.get('/savesitepic', function(req, res){
 })
 
 
+app.get('/printmap', function(req, res){
+	
+//gm.directions('5.6206,-0.1743', '5.7454954,0.106685'
+
+	var origin =req.param("olat")+','+req.param("olong");
+	var destination =req.param("dlat")+','+req.param("dlong");
+	var mid = ((((parseFloat(req.param("olat")))+parseFloat(req.param("dlat")))/2)+','+((parseFloat(req.param("olong"))+parseFloat(req.param("dlong")))/2));
+	markers = [
+
+    { 'location': origin},
+    { 'location': destination,
+        'color': 'yellow',
+        'label': 'A',
+        'shadow': 'false',
+        'icon' : 'http://chart.apis.google.com/chart?chst=d_map_spin&chld=2.1|0|FFFF42|13|b|AH@'
+    }
+]
+
+styles = [
+    { 'feature': 'road', 'element': 'all', 'rules': 
+        { 'hue': '0x00ff00' }
+    }
+]
+
+paths = [
+    { 'color': '0xFF0000', 'weight': '2', 'points': 
+        [ origin, destination]
+    }
+]
+
+console.log("Outing map....");
+res.send(gm.staticMap(mid, 14, '500x400', false, false, 'roadmap', markers, styles, paths));
+})
+
+
 
 
 
