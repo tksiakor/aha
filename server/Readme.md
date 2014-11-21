@@ -39,4 +39,5 @@
 
 ### Mapping Methods
 /getdirection?olat&olong&dlat&dlong <br />
+/getdrivetime?olat&olong&dlat&dlong
 /printmap?olat&olong&dlat&dlong <br />

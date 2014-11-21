@@ -37,6 +37,22 @@ app.get('/getdirection', function(req, res){
 })
 
 
+//To get time from a given location to another
+app.get('/getdrivetime', function(req, res){
+	gm.directions(''+req.param("olat")+','+req.param("olong"), req.param("dlat")+','+req.param("dlong") ,function(err, data){
+	// gm.directions('5.6206,-0.1743', '5.7454954,0.106685' ,function(err, data){
+		if(err){
+
+			console.log(err);
+
+		}
+		res.send(data.routes[0].legs[0].duration.text);
+	}) 
+
+})
+
+
+
 //STRUCTURES************************
 //business entity Schema definition
 var businessSchema = new mongoose.Schema({
