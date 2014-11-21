@@ -252,7 +252,7 @@ app.get('/getallbusinesses', function(req, res){
 app.get('/hitbusiness', function(req, res){
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Methods", "GET, POST");
-	businessUser.findOneAndUpdate({buser:req.param("user")}, {hits:req.param("hits")},function(err){
+	businessUser.findOneAndUpdate({buser:req.param("user")}, {$inc:{hits:1}},function(err){
 		if(err){
 			console.log(err);
 			res.end("0");
