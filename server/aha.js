@@ -7,6 +7,8 @@ var gen = require('ical-generator'),
 var gm = require('googlemaps');
 var util = require('util');	
 //ar geolib = require('geolib');
+mongoose.plugin(require('mongoose-list'));
+
 	
 mongoose.connect('mongodb://127.0.0.1/ahaSchema'); 
 
@@ -45,11 +47,8 @@ app.get('/getdrivetime', function(req, res){
 	res.header("Access-Control-Allow-Methods", "GET, POST");
 	gm.directions(''+req.param("olat")+','+req.param("olong"), req.param("dlat")+','+req.param("dlong") ,function(err, data){
 	// gm.directions('5.6206,-0.1743', '5.7454954,0.106685' ,function(err, data){
-		if(err){
-
-			console.log(err);
-
-		}
+		if(err) throw err
+			
 		res.send(data.routes[0].legs[0].duration.text);
 	}) 
 
@@ -142,8 +141,11 @@ app.get('/registerbusiness', function(req, res){
 		blong:0,
 		bwebsite:''+req.param("website"),
 		hits:0,
-	   //pic:''+req.param("pic")       
-
+	   	pic:''+req.param("pic"),
+	   	weekend_open:''+req.param("weekend_open"),
+		weekend_close:''+req.param("weekend_close"),
+		weekday_open:''+req.param("weekday_open"),
+		weekday_close:''+req.param("weekday_close")
 	}, function (err, bname) {
 
 	  if(err){
@@ -329,6 +331,17 @@ app.get('/setweekday', function(req, res){
 		}
 	})
 })
+app.get('/gettopbusinesses', function(req, res){
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, POST");
+	businessUser.list({start:0, limit:5, sort:'-hits'},function(err, count, user){
+	if (err) throw err;
+	console.log('found' + count + 'users');	
+		res.send(user);
+	})
+})
+//To get 5 top hit businesses
+
 
 
 //**Individual User Methods**
