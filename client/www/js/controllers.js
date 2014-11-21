@@ -8,28 +8,32 @@ angular.module('aha.controllers', [])
   $scope.appTitle = "@AHA";
 
   $scope.currentLocation ={
-longitude:"",
-latitude:"",
-getLocation:function(){
-console.log("called in location");
-if (navigator.geolocation) {
-navigator.geolocation.getCurrentPosition(this.showPosition)
-} else {
-//x.innerHTML = "Geolocation is not supported by this browser.";
-}
-},
-showPosition:function(position) {
-console.log("callback");
-console.log(position.coords.longitude);
-console.log(position.coords.latitude);
-this.longitude= position.coords.longitude;
-this.latitude= position.coords.latitude;
-}
+      longit:"",
+      latit:"",
+      getLocation:function(){
+        console.log("called in location");
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.showPosition)
+        } else {
+        //x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      },
+      showPosition:function(position) {
+        console.log("callback");
+        console.log(position.coords.longitude);
+        console.log(position.coords.latitude);
+        $scope.currentLocation.longit= position.coords.longitude;
+        $scope.currentLocation.latit= position.coords.latitude;
+      }, 
+      getLat: function(){
+        return this.latit;
+      }
 };
 $scope.currentLocation.getLocation();
+console.log("Latitude: "+ $scope.currentLocation.latit);
   if(typeof(Storage) !== "undefined") {
     console.log("storage");
-  if( localStorage.getItem("isRegistered")==true) {
+  if(localStorage.getItem("isRegistered")==="true") {
     $location.path("/app/home");
   
   } else {
@@ -112,15 +116,15 @@ var data = $scope.signup.business;
 var businessResponse = Registrar.register(data,2);
 console.log("business response"+businessResponse);
 businessResponse.then(function(result){
-console.log(result);
-if(result==1){
-console.log("got response 1");
-$scope.currentUser.isAuthenticated = true;
-$scope.currentUser.username = data.username;
-$scope.currentUser.accountType = "business";
-$scope.currentUser.saveUser();
-$scope.currentUser.startApp();
-}
+    console.log(result);
+    if(result==1){
+    console.log("got response 1");
+    $scope.currentUser.isAuthenticated = true;
+    $scope.currentUser.username = data.username;
+    $scope.currentUser.accountType = "business";
+    $scope.currentUser.saveUser();
+    $scope.currentUser.startApp();
+    }
 });
 };
 
@@ -152,23 +156,71 @@ $scope.currentUser.startApp();
   $scope.search = undefined; 
 })
 
-.controller('BizCtrl', function($scope, $stateParams, BizsFactory) {
+.controller('BizCtrl', function($scope, $stateParams,$http, $filter, BizsFactory) {
   $scope.biz = BizsFactory.getBizDetails($stateParams.userName);
-  console.log("Passing: " + $stateParams.userName);
-  //console.log('Sending username: ' + $scope.username);
-  //console.log('Return value: '+UsersFactory.getUserDetails($scope.username).name);
-})
-
-.controller('SearchForm', function($scope){
-  $scope.location = '';
-
-  $scope.doSearch = function(){
-      if($scope.location === ''){
-          alert('Directive did not update the location property in parent controller.');
-      } else {
-          alert('Yay. Location: ' + $scope.location);
-      }
+  console.log("Sending: " + $stateParams.userName);
+  $http.post('http://128.199.54.243:3000/hitbusiness?user='+$scope.biz.username);
+  $scope.today = new Date();
+  console.log('Today: '+$scope.today);
+  $scope.nowTime = $filter('date')($scope.today, 'HH:mm', 'UTC');
+  console.log("Formatted: " + $scope.nowTime);
+  $scope.nowSec = function(){
+    var times = $scope.nowTime.split(":");
+    var hours = times[0];
+    var minutes = times[1];
+    var seconds = (parseInt(minutes, 10)*60) + (parseInt(hours, 10) * 3600);
+    console.log("Now: "+seconds);
+    return seconds; 
   };
+
+  $scope.weekdStart = function(){
+    var times = $scope.biz.startWD.split(":");
+    var hours = times[0];
+    var minutes = times[1];
+    var seconds = (parseInt(minutes, 10)*60) + (parseInt(hours, 10) * 3600);
+    console.log("weekdStart: "+seconds);
+    return seconds; 
+  };
+//128.199.54.243:3000/getdrivetime?olat=121&olon=433&dlat=324&dlon=531
+  $scope.weekdEnd = function(){
+    var times = $scope.biz.endWD.split(":");
+    var hours = times[0];
+    var minutes = times[1];
+    var seconds = (parseInt(minutes, 10)*60) + (parseInt(hours, 10) * 3600);
+    console.log("weekdEnd: "+seconds);
+    return seconds; 
+  };
+
+  $scope.weekeStart = function(){
+    var times = $scope.biz.startWE.split(":");
+    var hours = times[0];
+    var minutes = times[1];
+    var seconds = (parseInt(minutes, 10)*60) + (parseInt(hours, 10) * 3600);
+    console.log("weekeStart: "+seconds);
+    return seconds; 
+  };
+
+  $scope.weekeEnd = function(){
+    var times = $scope.biz.endWE.split(":");
+    var hours = times[0];
+    var minutes = times[1];
+    var seconds = (parseInt(minutes, 10)*60) + (parseInt(hours, 10) * 3600);
+    console.log("WeekeEnd: "+seconds);
+    return seconds; 
+  };
+  $scope.isOpen = function(){
+    console.log("nowSec: "+$scope.nowSec()+" weekdStart: "+$scope.weekdStart()+" weekdEnd: "+ $scope.weekdEnd());
+    if($scope.nowSec() > $scope.weekdStart() && $scope.nowSec() < $scope.weekdEnd())
+      return true;
+    else
+      return false;
+  };
+  console.log("Open: " + $scope.isOpen());
+  $scope.open = $scope.isOpen();
+  $scope.driveTime = function() {
+    return $http.get("http://128.199.54.243:3000/getdrivetime?olat="+$scope.getLocation.latit+"&olong="+$scope.getLocation.longit+"&dlat="+$scope.biz.lat+"&dlong="+$scope.biz.lon);
+  };
+  $scope.dt = $scope.driveTime();
 })
 
 .controller('register', function ($scope) {

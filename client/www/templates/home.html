@@ -13,8 +13,9 @@
   	  </label>
   	  <button class="button button-clear">Cancel</button>
   	</div>
-    <div class="item item-energized" ng-show="search.username" ng-repeat="result in bizs | filter:search.username | limitTo:5">
-        <a href="#/app/bizs/{{result.username}}">{{result.username}}</a>
+    <div class="item item-calm" ng-show="search.username" ng-repeat="result in bizs | filter:search.username | limitTo:5">
+        <h2><a href="#/app/bizs/{{result.username}}">{{result.username}}</a></h2>
+        <p>{{result.address}}</p>
     </div>
     <div class="card">
         <div class="item item-divider">
