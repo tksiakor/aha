@@ -1,11 +1,40 @@
 angular.module('aha.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, Registrar,$location) {
   // Form data for the login modal
   $scope.loginData = {};
+  $scope.signup = {};
 
   $scope.appTitle = "@AHA";
 
+  $scope.currentLocation ={
+longitude:"",
+latitude:"",
+getLocation:function(){
+console.log("called in location");
+if (navigator.geolocation) {
+navigator.geolocation.getCurrentPosition(this.showPosition)
+} else {
+//x.innerHTML = "Geolocation is not supported by this browser.";
+}
+},
+showPosition:function(position) {
+console.log("callback");
+console.log(position.coords.longitude);
+console.log(position.coords.latitude);
+this.longitude= position.coords.longitude;
+this.latitude= position.coords.latitude;
+}
+};
+$scope.currentLocation.getLocation();
+  if(typeof(Storage) !== "undefined") {
+    console.log("storage");
+  if( localStorage.getItem("isRegistered")===true) {
+    $location.path("/app/home");
+  
+  } else {
+    $location.path("/app/register");
+  }}
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -22,6 +51,79 @@ angular.module('aha.controllers', [])
   $scope.login = function() {
     $scope.modal.show();
   };
+
+   $scope.currentUser={
+isAuthenticated : false,
+username : "",
+accountType:"",
+authenticate : function(){
+if(this.isAuthenticated==false)
+console.log("auth is false");
+//$location.path("/app/login");
+},
+startApp : function () {
+$location.path("/app/home");
+console.log("startapp");
+},
+logout : function(){
+this.isAuthenticated=false;
+this.username = "";
+},
+saveUser : function () {
+if(typeof(Storage) !== "undefined") {
+console.log("storage");
+localStorage.setItem("username", this.username);
+localStorage.setItem("isRegistered", this.isAuthenticated);
+localStorage.setItem("accountType", this.accountType);
+} else {
+// Sorry! No Web Storage support..
+console.log("no storage");
+}
+}
+};
+//Handles registration for individuals
+$scope.individualSignup = function () {
+console.log("individual register called");
+var data =$scope.signup.individual;
+console.log(data);
+var individualResponse = Registrar.register(data,1);
+console.log("individual response: "+individualResponse);
+/*
+myDataPromise.then(function(result) { // this is only run after $http completes
+$scope.data = result;
+console.log("data.name"+$scope.data.name);
+});
+*/
+individualResponse.then(function(result){
+console.log(result);
+if(result==1){
+console.log("got response 1");
+$scope.currentUser.isAuthenticated = true;
+$scope.currentUser.username = data.username;
+$scope.currentUser.accountType = "individual";
+$scope.currentUser.saveUser();
+$scope.currentUser.startApp();
+}
+});
+};
+//Handles registration for businesses
+$scope.businessSignup = function () {
+var data = $scope.signup.business;
+var businessResponse = Registrar.register(data,2);
+console.log("business response"+businessResponse);
+businessResponse.then(function(result){
+console.log(result);
+if(result==1){
+console.log("got response 1");
+$scope.currentUser.isAuthenticated = true;
+$scope.currentUser.username = data.username;
+$scope.currentUser.accountType = "business";
+$scope.currentUser.saveUser();
+$scope.currentUser.startApp();
+}
+});
+};
+
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
@@ -67,4 +169,8 @@ angular.module('aha.controllers', [])
           alert('Yay. Location: ' + $scope.location);
       }
   };
+})
+
+.controller('register', function ($scope) {
+console.log("controller register");
 });

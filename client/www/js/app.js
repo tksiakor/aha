@@ -77,6 +77,15 @@ angular.module('aha', ['ionic', 'aha.controllers', 'aha.factories', 'aha.directi
         }
       }
     })
+    .state('app.register', {
+url: "/register",
+views: {
+'menuContent': {
+templateUrl: "templates/register.html",
+controller: 'register'
+}
+}
+})
     .state('app.bizs', {
       url: "/bizs",
       views: {
