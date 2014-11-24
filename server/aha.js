@@ -31,9 +31,9 @@ app.get('/getdirection', function(req, res){
 	gm.directions(''+req.param("olat")+','+req.param("olong"), req.param("dlat")+','+req.param("dlong") ,function(err, data){
 	//gm.directions('5.6206,-0.1743', '5.7454954,0.106685' ,function(err, data){
 		if(err){
-
 			console.log(err);
-
+			//Network Error
+			res.end("0");
 		}
 		res.send(JSON.stringify(data));
 	}) 
@@ -72,6 +72,7 @@ var businessSchema = new mongoose.Schema({
 	bphone:{type:String},
 	bconfirmphone:{type:String},
 	bdescription:{type:String},
+	barea:{type:String},
 	type:{type:String},
 	blat:{type:Number},
 	blong:{type:Number},
@@ -143,11 +144,13 @@ app.get('/registerbusiness', function(req, res){
 		type:''+req.param("type"),
 		bconfirmphone:000,
 		bdescription:''+req.param("description"),
+		barea:''+req.param("area"),
 		blat:0,
 		blong:0,
 		bwebsite:''+req.param("website"),
 		hits:0,
 	   	pic:''+req.param("pic"),
+	   	logo:''+req.param('logo'),
 	   	weekend_open:''+req.param("weekend_open"),
 		weekend_close:''+req.param("weekend_close"),
 		weekday_open:''+req.param("weekday_open"),
@@ -211,11 +214,11 @@ app.get('/setbcoordinates', function(req, res){
 	businessUser.findOneAndUpdate({buser:req.param("user")}, {blat:req.param("lat"),blong:req.param("long")},function(err){
 		if(err){
 			console.log(err);
-			res.end("Failed to Update");
+			res.end("0");
 		}
 		else
 		{
-			res.end("Updated");
+			res.end("1");
 		}
 	})
 
