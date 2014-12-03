@@ -4,4 +4,5 @@ font-size: 13px;
 }
 item a, a:visited, a:active {
 	color: #111;
+	text-decoration: none;
 }

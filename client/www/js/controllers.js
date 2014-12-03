@@ -4,6 +4,13 @@ angular.module('aha.controllers', [])
   // Form data for the login modal
   $scope.loginData = {};
   $scope.signup = {};
+  $scope.resultsDisplayed = 2;
+  $scope.loadMore = function () {
+      $scope.resultsDisplayed += 2;  
+  };
+  $scope.resetMore = function () {
+      $scope.resultsDisplayed = 2;  
+  };
 
   $scope.appTitle = "@AHA";
 
@@ -24,9 +31,6 @@ angular.module('aha.controllers', [])
         console.log(position.coords.latitude);
         $scope.currentLocation.longit= position.coords.longitude;
         $scope.currentLocation.latit= position.coords.latitude;
-      }, 
-      getLat: function(){
-        return this.latit;
       }
 };
 $scope.currentLocation.getLocation();
@@ -34,7 +38,10 @@ console.log("Latitude: "+ $scope.currentLocation.latit);
   if(typeof(Storage) !== "undefined") {
     console.log("storage");
   if(localStorage.getItem("isRegistered")==="true") {
-    $location.path("/app/home");
+    if(localStorage.getItem("accountType")==="individual")
+      $location.path("/app/home");
+    else
+      $location.path("/app/bizhome");
   
   } else {
     $location.path("/app/register");
@@ -159,7 +166,7 @@ businessResponse.then(function(result){
 .controller('BizCtrl', function($scope, $stateParams,$http, $filter, BizsFactory) {
   $scope.biz = BizsFactory.getBizDetails($stateParams.userName);
   console.log("Sending: " + $stateParams.userName);
-  $http.post('http://128.199.54.243:3000/hitbusiness?user='+$scope.biz.username);
+  $http.get('http://128.199.54.243:3000/hitbusiness?user='+$scope.biz.username);
   $scope.today = new Date();
   console.log('Today: '+$scope.today);
   $scope.nowTime = $filter('date')($scope.today, 'HH:mm', 'UTC');
@@ -217,10 +224,7 @@ businessResponse.then(function(result){
   };
   console.log("Open: " + $scope.isOpen());
   $scope.open = $scope.isOpen();
-  $scope.driveTime = function() {
-    return $http.get("http://128.199.54.243:3000/getdrivetime?olat="+$scope.getLocation.latit+"&olong="+$scope.getLocation.longit+"&dlat="+$scope.biz.lat+"&dlong="+$scope.biz.lon);
-  };
-  $scope.dt = $scope.driveTime();
+  
 })
 
 .controller('register', function ($scope) {

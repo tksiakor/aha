@@ -5,52 +5,47 @@
 
   <ion-content class="has-header">
     <div class="bar bar-header item-input-inset">
-  	  <label class="item-input-wrapper">
-  	    <i class="icon ion-ios7-search placeholder-icon"></i>
-  	    <!--<google-places location=location></google-places>-->
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios7-search placeholder-icon"></i>
+        <!--<google-places location=location></google-places>-->
 
-  	    <input ng-click = "" type="search" placeholder="Eg. @accramall" ng-model="search.username">
-  	  </label>
-  	  <button class="button button-clear">Cancel</button>
-  	</div>
-    <div class="item item-energized" ng-show="search.username" ng-repeat="result in bizs | filter:search.username | limitTo:5">
-        <a href="#/app/bizs/{{result.username}}">{{result.username}}</a>
+        <input ng-click = "" type="search" placeholder="Eg. @accramall" ng-model="search.username">
+      </label>
+      <button class="button button-clear">Cancel</button>
+    </div>
+    <div class="item item-calm" ng-show="search.username" ng-repeat="result in bizs | filter:search.username | limitTo:5">
+        <a href="#/app/bizs/{{result.username}}"><h2>{{result.username}}</h2>
+        <p>{{result.address}}</p></a>
     </div>
     <div class="card">
         <div class="item item-divider">
           <i class="icon ion-location"></i>
-            Recent Places
+            Analytics
         </div>
-        <a class="item item-text-wrap" href="#/app/bizs/@Vodafone">
+        <div class="item item-text-wrap">
 
-            <div class="row">
-              <div class="col col-50">
-                <i class="icon ion-at"></i>Vodafone
-              </div>
-              <div class="col col-20">Open</div>
-              <div class="col">
-                <i class="icon ion-model-s"></i> 1h:25m</div>
+            <div class="item item-icon-left">
+              <i class="icon ion-stats-bars"></i>
+              Today Visits
+              <span class="badge badge-assertive">11</span>
+            </div> 
+            <div class="item item-icon-left">
+              <i class="icon ion-connection-bars"></i>
+              All Visits
+              <span class="badge badge-assertive">546</span>
             </div>       
-        </a> 
-        <a class="item item-text-wrap" href="#/app/bizs/@Ashesi">
-
-            <div class="row">
-              <div class="col col-50">
-                <i class="icon ion-at"></i>Ashesi
-              </div>
-              <div class="col col-20">Closed</div>
-              <div class="col">
-                <i class="icon ion-model-s"></i> 0h:45m</div>
-            </div>       
-        </a>       
     </div>
 
     <div class="card">
-        <div class="item item-text-wrap" href="#/app/bizs/@Vodafone">
+    <div class="item item-divider">
+          <i class="icon ion-location"></i>
+            Analytics
+        </div>
+        <a class="item item-text-wrap" href="#/app/bizs/@Vodafone">
             <div class="item item-image">
               <img class="full-image" src="img/vodad.jpg">
             </div> 
-        </div>       
+        </a>       
     </div>
 
   </ion-content>

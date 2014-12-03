@@ -28,8 +28,22 @@
         Saturday: {{biz.startWE}} - {{biz.endWE}}
         <br />
         Saturday: Closed all day
+    </p>
+    <p><i class="icon ion-arrow-graph-up-right"></i>
+      <strong>Address</strong>
         <br />
-        Drive Time: {{dt}}
+        <a ng-href="geo:{{biz.lat}},{{biz.lon}}?q={{biz.address}}">{{biz.address}}</a>
+    </p>
+
+    <p><i class="icon ion-ios7-telephone"></i>
+      <strong>Phone</strong>
+        <br />
+        <a ng-href="tel:{{biz.phone}}">{{biz.phone}}</a>
+    </p>
+    <p><i class="icon ion-ios7-world"></i>
+      <strong>Website</strong>
+        <br />
+        <a ng-href="http://{{biz.website}}">{{biz.website}}</a>
         <br />
         <br />
     </p>
@@ -37,15 +51,12 @@
 
 </div>
   </ion-content>
-  <div class="tabs tabs-icon-left tabs-assertive">
-  <a class="tab-item" href="tel:{{biz.phone}}">
+  <ion-footer class="tabs tabs-icon-left tabs-assertive">
+  <a class="tab-item" ng-href="tel:{{biz.phone}}">
       <i class="icon ion-ios7-telephone"></i>Call      
-    </a>
-    <a class="tab-item" href="#">
+  </a>
+  <a class="tab-item" ng-href="https://www.google.com.gh/maps/dir///@{{biz.lat}},{{biz.lon}}?q={{biz.address}}">
       <i class="icon ion-arrow-graph-up-right"></i>Directions
-    </a>
-    <a class="tab-item" href="#">
-      <i class="icon ion-android-share"></i>Share
-    </a>
-</div>
+  </a>
+  </ion-footer>
 </ion-view>
