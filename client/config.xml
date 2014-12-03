@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0" id="com.ionicframework.aha886563" version="0.0.1"  xmlns="http://www.w3.org/ns/widgets">
-  <name>aha</name>
+  <name>AHA</name>
   <description>
-        An Ionic Framework and Cordova project.
+        AHA helps you find places in Ghana and their open/close times.
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="shamir.adjaku@ashesi.edu.gh" href="http://ashesi.edu.gh/">
+      AHA Team from Ashesi
     </author>
   <content src="index.html"/>
   <access origin="*"/>
@@ -16,6 +16,20 @@
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
+    <gap:splash src="screen.png" />
+    <gap:splash src="platforms/android/res/drawable-xhdpi/screen.png" gap:platform="android" gap:density="mdpi" />
   <gap:plugin name="org.transistorsoft.cordova.background-geolocation" />
-
+    <platform name="android">
+        <icon src="icons/android/Aha40x40.png" width="40" height="40" />
+        <icon src="icons/android/Aha48x48.png" width="48" height="48"/>
+        <icon src="icons/android/Aha72x71.png" width="72" height="72"/>
+        <icon src="icons/android/Aha95x95.png" width="95" height="95"/>
+        <icon src="icons/android/Aha512x512.png" width="512" height="512"/>
+    </platform>
+    
+    <access origin="http:*" launch-external="yes" />
+    <access origin="https:*" launch-external="yes" />
+    <access origin="tel:*" launch-external="yes" />
+    <access origin="mailto:*" launch-external="yes" />
+    <access origin="geo:*" launch-external="yes" />
 </widget>

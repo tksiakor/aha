@@ -33,17 +33,19 @@ angular.module('aha.factories', [])
 
 	return factory;
 })
-.factory('BizsFactory', function () {
-	
+.factory('BizsFactory', function ($http) {
+	// var url = "http://128.199.54.243:3000";
+	// var path="/getallbusinesses";
 	var BizsDetails = [
-		{ name: 'Ashesi University College', username: '@Ashesi', address: "1 University Avenue, Berekuso, Greater Accra, Ghana", phone: '0302-674-583',  lat: 5.759279, lon: -0.2200910000000249, pic: 'img/ashesil.jpg', full: 'img/ashesi-full.jpg', logo: 'img/ashesil.jpg', desc: "Ashesi University is a coeducational institution whose goal is to educate African leaders of exceptional integrity and professional ability.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
-	    { name: 'Papaye Fast Foods', username: '@Papaye',address: "Vodafone Ghana Head Quarters, Airport By-Pass road, Accra, Greater Accra, Ghana", phone: '0302-674-583', lat: 5.55966, lon: -0.1820470000000114, pic: 'img/mcfly.jpg', full: 'img/delorean.jpg', logo: 'img/delorean.jpg', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
-	    { name: 'National Theatre', username: '@NatTheatre', address: "Vodafone Ghana Head Quarters, Airport By-Pass road, Accra, Greater Accra, Ghana", phone: '0302-674-583', lat: 5.55, lon: -0.20000000000004547, pic: 'img/mcfly.jpg', full: 'img/delorean.jpg', logo: 'img/delorean.jpg', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
-	    { name: 'Accra Mall', username: '@AccraMall', address: "Vodafone Ghana Head Quarters, Airport By-Pass road, Accra, Greater Accra, Ghana", phone: '0302-674-583', lat: 5.621714, lon: -0.1736879999999701, pic: 'img/mcfly.jpg', full: 'img/delorean.jpg', logo: 'img/delorean.jpg', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
-	    { name: 'Vodafone Ghana', address: "Vodafone Ghana Headquarters, Airport By-Pass road, Accra, Greater Accra, Ghana", username: '@Vodafone', phone: '0302-100-000', lat: 5.599984, lon: -0.17611399999998412, pic: 'img/mcfly.jpg', full: 'img/vodafone.jpg', logo: 'img/logo.png', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'}
-	];
-
+		{ name: 'Ashesi University College', username: '@Ashesi',website:"www.ashesi.edu.gh" , address: "1 University Avenue, Berekuso, Eastern Region, Ghana", phone: '0302610330',  lat: 5.759279, lon: -0.2200910000000249, pic: 'img/ashesil.jpg', full: 'img/ashesi-full.jpg', logo: 'img/ashesil.jpg', desc: "Ashesi University is a coeducational institution whose goal is to educate African leaders of exceptional integrity and professional ability.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
+	    { name: 'Papaye Fast Foods', username: '@Papaye',website:"www.papayegroup.com" ,address: "Papaye Fast Foods Ltd, Oxford Street, Osu, Accra, Greater Accra, Ghana", phone: '0302810990', lat: 5.55966, lon: -0.1820470000000114, pic: 'img/papaye_full.jpg', full: 'img/papaye_full.jpg', logo: 'img/logo_papaye.jpg', desc: "Papaye Restaurant a family restaurants committed to providing every guest with a genuine African dining experience.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
+	    { name: 'National Theatre', username: '@NatlTheatre',website:"www.nationaltheatre.com.gh" ,address: "National Theatre Ghana, South Liberia Road, Accra 12345, Ghana", phone: '0302663449', lat: 5.55, lon: -0.20000000000004547, pic: 'img/natl_full.jpg', full: 'img/natl_full.jpg', logo: 'img/natl_logo.jpeg', desc: "The National Theatre, opened in 1992 and located in the Victoriaborg district of Accra, Ghana, was built by the Chinese and offered as a gift to Ghana.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
+	    { name: 'Accra Mall', username: '@AccraMall',website:"www.accramall.info" ,address: "Spintex Rd, Accra, Greater Accra, Ghana", phone: '+233302823041', lat: 5.621714, lon: -0.1736879999999701, pic: 'img/accramall.jpeg', full: 'img/accramall.jpeg', logo: 'img/accram_logo.jpg', desc: "The Accra Mall is a shopping center in Accra, Ghana. The mall was commissioned on the 4th of July 2008.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'},
+	    { name: 'Vodafone Ghana',website:"www.vodafone.com.gh" ,address: "Vodafone Ghana Headquarters, Airport By-Pass road, Accra, Greater Accra, Ghana", username: '@Vodafone', phone: '+233302552552', lat: 5.599984, lon: -0.17611399999998412, pic: 'img/mcfly.jpg', full: 'img/vodafone.jpg', logo: 'img/logo.png', desc: "Vodafone in Ghana is one of the latest additions to Vodafone Group Plc, the world's leading mobile telecommunications company.", startWD: '08:30', endWD: '17:00', startWE: '10:00', endWE: '15:00'}
+	];	
+	// var BizsDetails={};
 	var factory = {};
+	// var BizsDetailsGetter
 
 	factory.getBizDetails = function(username){
 		var bizDetails = "";
@@ -54,6 +56,12 @@ angular.module('aha.factories', [])
 		});
 		return bizDetails;
 	};
+// 	factory.updateBizDetails = function(){
+// 		return $http({method:"GET", url:url+path}).then(function(result){
+// 			// return result.data;
+// 			BizsDetails =result.data;
+// });
+// 	}
 	
 	factory.getBizsDetails = function(){
 		return BizsDetails;

@@ -30,11 +30,21 @@ angular.module('aha', ['ionic', 'aha.controllers', 'aha.factories', 'aha.directi
       controller: 'AppCtrl'
     })
 
-    .state('app.search', {
-      url: "/search",
+    .state('app.intro', {
+      url: "/intro",
       views: {
         'menuContent' :{
-          templateUrl: "templates/search.html"
+          templateUrl: "templates/intro.html"
+        }
+      }
+    })
+
+    .state('app.bizhome', {
+      url: "/bizhome",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/bizhome.html",
+          controller: "BizsCtrl"
         }
       }
     })
@@ -45,6 +55,14 @@ angular.module('aha', ['ionic', 'aha.controllers', 'aha.factories', 'aha.directi
         'menuContent' :{
           templateUrl: "templates/home.html",
           controller: "BizsCtrl"
+        }
+      }
+    })
+    .state('app.about', {
+      url: "/about",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/about.html"
         }
       }
     })
